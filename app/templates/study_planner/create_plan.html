@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Create Study Plan{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="text-center">Create New Study Plan</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="subject" class="form-label">Subject</label>
+                        <input type="text" class="form-control" id="subject" name="subject" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Generate Study Plan</button>
+                    </div>
+                </form>
+                <div class="mt-4">
+                    <h4>How it works:</h4>
+                    <p>Our AI will analyze your subject and create a personalized study plan including:</p>
+                    <ul>
+                        <li>Main topics to cover</li>
+                        <li>Recommended study schedule</li>
+                        <li>Learning objectives</li>
+                        <li>Practice exercises</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

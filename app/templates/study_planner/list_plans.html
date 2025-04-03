@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}My Study Plans{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>My Study Plans</h2>
+            <a href="{{ url_for('study_planner.create_plan') }}" class="btn btn-primary">Create New Plan</a>
+        </div>
+        
+        {% if plans %}
+        <div class="row">
+            {% for plan in plans %}
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">{{ plan.title }}</h5>
+                        <span class="badge bg-primary">{{ plan.subject }}</span>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{ plan.description }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">Created: {{ plan.created_at.strftime('%Y-%m-%d') }}</small>
+                            <a href="{{ url_for('study_planner.view_plan', plan_id=plan.id) }}" class="btn btn-outline-primary">View Plan</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center">
+            <h3>No study plans yet</h3>
+            <p>Create your first study plan to get started!</p>
+            <a href="{{ url_for('study_planner.create_plan') }}" class="btn btn-primary">Create New Plan</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %} 

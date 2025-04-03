@@ -1,0 +1,30 @@
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# Environment Variables
+.env
+.env.*
+
+# Python Cache Files
+__pycache__/
+*.py[cod]
+*$py.class
+app/__pycache__/
+migrations/__pycache__/
+
+# Distribution / Packaging
+dist/
+build/
+*.egg-info/
+
+# IDE specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local development
+*.log
+.DS_Store

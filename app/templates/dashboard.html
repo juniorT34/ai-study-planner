@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h1 class="display-4">Welcome, {{ user.username }}!</h1>
+            <p class="lead">Here's an overview of your study plans and progress.</p>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <!-- Stats Cards -->
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <h3 class="card-title">Active Plans</h3>
+                    <p class="display-4">{{ user.study_plans|length }}</p>
+                    <a href="{{ url_for('study_planner.list_plans') }}" class="btn btn-outline-primary">View All Plans</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <h3 class="card-title">Total Tasks</h3>
+                    <p class="display-4">
+                    {% set total_tasks = 0 %}
+                    {% for plan in user.study_plans %}
+                        {% set total_tasks = total_tasks + plan.tasks|length %}
+                    {% endfor %}
+                    {{ total_tasks }}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <h3 class="card-title">Completed Tasks</h3>
+                    <p class="display-4">
+                    {% set completed_tasks = 0 %}
+                    {% for plan in user.study_plans %}
+                        {% for task in plan.tasks %}
+                            {% if task.completed %}
+                                {% set completed_tasks = completed_tasks + 1 %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                    {{ completed_tasks }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Study Plans -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0">Recent Study Plans</h3>
+                        <a href="{{ url_for('study_planner.create_plan') }}" class="btn btn-primary">Create New Plan</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {% if user.study_plans %}
+                        <div class="list-group list-group-flush">
+                        {% for plan in user.study_plans %}
+                            <div class="list-group-item border-0">
+                                <div class="d-flex w-100 justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="mb-1">{{ plan.title }}</h5>
+                                        <p class="mb-1 text-muted">{{ plan.subject }}</p>
+                                    </div>
+                                    <div>
+                                        <a href="{{ url_for('study_planner.view_plan', plan_id=plan.id) }}" 
+                                           class="btn btn-outline-primary btn-sm">View Plan</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center py-5">
+                            <h4>No study plans yet</h4>
+                            <p class="text-muted">Create your first study plan to get started!</p>
+                            <a href="{{ url_for('study_planner.create_plan') }}" class="btn btn-primary">Create New Plan</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
